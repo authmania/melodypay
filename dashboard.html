@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — MelodyPay</title>
+  <meta name="theme-color" content="#0a0828" />
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <script src="js/auth.js"></script>
+  <script>
+    // Only registered, logged-in users may see the dashboard
+    if (!Auth.current()) {
+      document.documentElement.style.visibility = 'hidden';
+      location.replace('index.html#login');
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-brand">
+      <span class="brand-disc"><i data-icon="music"></i><span class="coin">₦</span></span>
+      <span class="logo-text">Melody<span>pay</span></span>
+      <small>Listen • Tap • Earn</small>
+    </a>
+
+    <nav class="side-nav" id="sideNav">
+      <a href="#dashboard" data-view="dashboard"><i data-icon="home"></i>Dashboard</a>
+      <a href="#listen" data-view="listen"><i data-icon="music"></i>Listen &amp; Earn</a>
+      <a href="#tasks" data-view="tasks"><i data-icon="tap"></i>Tap Tasks</a>
+      <a href="#rewards" data-view="rewards"><i data-icon="gift"></i>Rewards</a>
+      <a href="#history" data-view="history"><i data-icon="receipt"></i>Transaction History</a>
+      <a href="#referral" data-view="referral"><i data-icon="users"></i>Referral Program</a>
+      <a href="#settings" data-view="settings"><i data-icon="settings"></i>Account Settings</a>
+      <a href="#help" data-view="help"><i data-icon="help"></i>Help &amp; Support</a>
+    </nav>
+
+    <div class="side-promo">
+      <div class="promo-art">
+        <i data-icon="music"></i>
+        <span class="coin c1">₦</span><span class="coin c2">₦</span><span class="coin c3">₦</span>
+      </div>
+      <h3>Good Music<br /><span class="text-gold">Great Rewards</span></h3>
+      <p>The more you listen,<br />the more you earn!</p>
+    </div>
+    <div class="side-wave" aria-hidden="true"></div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><i data-icon="menu"></i></button>
+      <label class="search">
+        <i data-icon="search"></i>
+        <span class="sr-only">Search</span>
+        <input type="search" id="searchInput" placeholder="Search songs, artists or tasks..." autocomplete="off" />
+      </label>
+      <div class="top-actions">
+        <div class="balance-chip" title="Available balance"><span class="coin">₦</span><span id="chipBalance">₦0</span></div>
+        <button class="icon-btn" id="bellBtn" aria-label="Notifications"><i data-icon="bell"></i><span class="dot" id="bellDot"></span></button>
+        <button class="avatar" id="avatarBtn" aria-label="Account"><span id="avatarInitial">Q</span></button>
+      </div>
+    </header>
+
+    <main class="content" id="view" tabindex="-1"></main>
+  </div>
+
+  <!-- ============ MINI PLAYER ============ -->
+  <div class="player" id="player" hidden>
+    <div class="player-cover" id="playerCover"></div>
+    <div class="player-info">
+      <b id="playerTitle">—</b>
+      <span id="playerGenre">—</span>
+    </div>
+    <div class="player-progress">
+      <div class="bar"><span id="playerBar"></span></div>
+      <small id="playerTime">0:00 / 0:15</small>
+    </div>
+    <div class="player-reward"><span class="coin">₦</span><span id="playerReward">+₦5</span></div>
+    <button class="player-btn" id="playerToggle" aria-label="Pause"></button>
+    <button class="icon-btn" id="playerClose" aria-label="Stop"><i data-icon="x"></i></button>
+  </div>
+
+  <!-- ============ WITHDRAW MODAL ============ -->
+  <div class="modal" id="withdrawModal" role="dialog" aria-modal="true" aria-labelledby="wdTitle">
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Close"><i data-icon="x"></i></button>
+      <h2 id="wdTitle">Withdraw funds</h2>
+      <p class="sub">Available: <b class="text-gold" id="wdAvail">₦0</b> · Minimum ₦1,000</p>
+      <form id="withdrawForm" novalidate>
+        <div class="field">
+          <label for="wdAmount">Amount (₦)</label>
+          <input class="input" id="wdAmount" name="amount" type="number" inputmode="numeric" min="1000" placeholder="e.g. 5000" />
+          <div class="quick-amounts" id="quickAmounts"></div>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="wdBank">Bank</label>
+          <select class="input" id="wdBank" name="bank">
+            <option value="">Select your bank</option>
+            <option>Access Bank</option><option>First Bank</option><option>GTBank</option>
+            <option>Kuda</option><option>Moniepoint</option><option>OPay</option>
+            <option>PalmPay</option><option>UBA</option><option>Zenith Bank</option>
+          </select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="wdAcct">Account number</label>
+          <input class="input" id="wdAcct" name="account" inputmode="numeric" maxlength="10" placeholder="10-digit account number" />
+          <span class="field-error"></span>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Withdraw</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ TAP TASK MODAL ============ -->
+  <div class="modal" id="tapModal" role="dialog" aria-modal="true" aria-labelledby="tapTitle">
+    <div class="modal-card center">
+      <button class="modal-close" data-close aria-label="Close"><i data-icon="x"></i></button>
+      <h2 id="tapTitle">Tap &amp; Earn</h2>
+      <p class="sub">Tap the button <b id="tapGoal">50</b> times to earn <b class="text-gold">₦3</b></p>
+      <div class="tap-ring" id="tapRing">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="54" class="track" />
+          <circle cx="60" cy="60" r="54" class="fill" id="tapArc" />
+        </svg>
+        <button class="tap-btn" id="tapBtn" aria-label="Tap"><i data-icon="tap"></i></button>
+      </div>
+      <div class="tap-count"><b id="tapCount">0</b> / <span id="tapGoal2">50</span></div>
+    </div>
+  </div>
+
+  <!-- ============ VIDEO TASK MODAL ============ -->
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="vidTitle">
+    <div class="modal-card center">
+      <button class="modal-close" data-close aria-label="Close"><i data-icon="x"></i></button>
+      <h2 id="vidTitle">Watch &amp; Earn</h2>
+      <p class="sub">Watch the full clip to earn <b class="text-gold">₦8</b></p>
+      <div class="video-box">
+        <div class="video-eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <span class="video-label">MelodyPay • Featured artist spotlight</span>
+        <div class="bar"><span id="videoBar"></span></div>
+      </div>
+      <p class="sub" id="videoLeft" style="margin-top:14px">10s remaining</p>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <script src="js/icons.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
