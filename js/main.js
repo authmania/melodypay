@@ -123,7 +123,7 @@
     function calc() {
       const [songs, tasks, refs] = sliders.map((s) => +s.value);
       sliders.forEach((s) => (document.getElementById(s.id + 'Val').textContent = s.value));
-      const monthly = (songs * 5 + tasks * 3 + 10) * 30 + refs * 200;
+      const monthly = (songs * 2000 + tasks * 2000) * 30 + refs * 1000;
       document.getElementById('calcTotal').textContent = naira(monthly);
     }
     sliders.forEach((s) => s.addEventListener('input', calc));

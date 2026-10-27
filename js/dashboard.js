@@ -35,30 +35,33 @@
      Catalogue
      ========================================================= */
   const LISTEN_SECONDS = 15;
+  const SONG_REWARD = 2000;
+  const TASK_REWARD = 2000;
+  const REFERRAL_BONUS = 1000;
 
   const SONGS = [
-    { id: 'calm',     title: 'Calm Vibes',    genre: 'Lo-fi Beats',  artist: 'DJ Lumi',       art: 'art-sunset',  glyph: 'headphones', reward: 5, root: 57, bpm: 78 },
-    { id: 'energy',   title: 'Good Energy',   genre: 'Afro Beats',   artist: 'Kola Waves',    art: 'art-palms',   glyph: 'music',      reward: 5, root: 62, bpm: 104 },
-    { id: 'better',   title: 'Better Days',   genre: 'Pop Mix',      artist: 'Ada Nova',      art: 'art-neon',    glyph: 'bolt',       reward: 5, root: 60, bpm: 112 },
-    { id: 'freedom',  title: 'Freedom',       genre: 'Chill Vibes',  artist: 'Seyi Blue',     art: 'art-ocean',   glyph: 'heart',      reward: 5, root: 55, bpm: 84 },
-    { id: 'lagos',    title: 'Lagos Nights',  genre: 'Amapiano',     artist: 'Log Drum Kid',  art: 'art-night',   glyph: 'star',       reward: 6, root: 58, bpm: 112 },
-    { id: 'sweet',    title: 'Sweet Melody',  genre: 'R&B Soul',     artist: 'Temi Rose',     art: 'art-rose',    glyph: 'heart',      reward: 5, root: 63, bpm: 90 },
-    { id: 'golden',   title: 'Golden Hour',   genre: 'Highlife',     artist: 'Oga Guitar',    art: 'art-gold',    glyph: 'music',      reward: 6, root: 64, bpm: 100 },
-    { id: 'breeze',   title: 'Island Breeze', genre: 'Reggae Mix',   artist: 'Palm & Sand',   art: 'art-emerald', glyph: 'headphones', reward: 5, root: 59, bpm: 88 }
+    { id: 'calm',     title: 'Calm Vibes',    genre: 'Lo-fi Beats',  artist: 'DJ Lumi',       art: 'art-sunset',  glyph: 'headphones', reward: SONG_REWARD, root: 57, bpm: 78 },
+    { id: 'energy',   title: 'Good Energy',   genre: 'Afro Beats',   artist: 'Kola Waves',    art: 'art-palms',   glyph: 'music',      reward: SONG_REWARD, root: 62, bpm: 104 },
+    { id: 'better',   title: 'Better Days',   genre: 'Pop Mix',      artist: 'Ada Nova',      art: 'art-neon',    glyph: 'bolt',       reward: SONG_REWARD, root: 60, bpm: 112 },
+    { id: 'freedom',  title: 'Freedom',       genre: 'Chill Vibes',  artist: 'Seyi Blue',     art: 'art-ocean',   glyph: 'heart',      reward: SONG_REWARD, root: 55, bpm: 84 },
+    { id: 'lagos',    title: 'Lagos Nights',  genre: 'Amapiano',     artist: 'Log Drum Kid',  art: 'art-night',   glyph: 'star',       reward: SONG_REWARD, root: 58, bpm: 112 },
+    { id: 'sweet',    title: 'Sweet Melody',  genre: 'R&B Soul',     artist: 'Temi Rose',     art: 'art-rose',    glyph: 'heart',      reward: SONG_REWARD, root: 63, bpm: 90 },
+    { id: 'golden',   title: 'Golden Hour',   genre: 'Highlife',     artist: 'Oga Guitar',    art: 'art-gold',    glyph: 'music',      reward: SONG_REWARD, root: 64, bpm: 100 },
+    { id: 'breeze',   title: 'Island Breeze', genre: 'Reggae Mix',   artist: 'Palm & Sand',   art: 'art-emerald', glyph: 'headphones', reward: SONG_REWARD, root: 59, bpm: 88 }
   ];
 
   const TASKS = [
-    { id: 'tap',     title: 'Tap & Earn Task', desc: 'Tap the button 50 times',     reward: 3,  icon: 'tap',      limit: 5, cta: 'Start' },
-    { id: 'checkin', title: 'Daily Check-in',  desc: 'Login daily and get rewarded', reward: 10, icon: 'calendar', limit: 1, cta: 'Check In' },
-    { id: 'video',   title: 'Watch & Earn',    desc: 'Watch a 10-second clip',       reward: 8,  icon: 'video',    limit: 3, cta: 'Watch' },
-    { id: 'share',   title: 'Share MelodyPay', desc: 'Copy and share your invite link', reward: 5, icon: 'share',  limit: 1, cta: 'Share' }
+    { id: 'tap',     title: 'Tap & Earn Task', desc: 'Tap the button 50 times',     reward: TASK_REWARD, icon: 'tap',      limit: 5, cta: 'Start' },
+    { id: 'checkin', title: 'Daily Check-in',  desc: 'Login daily and get rewarded', reward: TASK_REWARD, icon: 'calendar', limit: 1, cta: 'Check In' },
+    { id: 'video',   title: 'Watch & Earn',    desc: 'Watch a 10-second clip',       reward: TASK_REWARD, icon: 'video',    limit: 3, cta: 'Watch' },
+    { id: 'share',   title: 'Share MelodyPay', desc: 'Copy and share your invite link', reward: TASK_REWARD, icon: 'share',  limit: 1, cta: 'Share' }
   ];
 
   const MILESTONES = [
-    { id: 'songs10', title: 'Music Lover',  desc: 'Listen to 10 songs',       icon: 'headphones', reward: 50,  goal: 10,    value: (s) => s.songsPlayed },
-    { id: 'tasks25', title: 'Task Master',  desc: 'Complete 25 tasks',        icon: 'check',      reward: 100, goal: 25,    value: (s) => s.tasks },
-    { id: 'refs5',   title: 'Influencer',   desc: 'Invite 5 friends',         icon: 'users',      reward: 500, goal: 5,     value: (s) => s.referrals },
-    { id: 'earn15k', title: 'High Earner',  desc: 'Reach ₦15,000 total earnings', icon: 'trophy', reward: 250, goal: 15000, value: (s) => s.total }
+    { id: 'songs10', title: 'Music Lover',  desc: 'Listen to 10 songs',       icon: 'headphones', reward: 5000,  goal: 10,    value: (s) => s.songsPlayed },
+    { id: 'tasks25', title: 'Task Master',  desc: 'Complete 25 tasks',        icon: 'check',      reward: 10000, goal: 25,    value: (s) => s.tasks },
+    { id: 'refs5',   title: 'Influencer',   desc: 'Invite 5 friends',         icon: 'users',      reward: 5000,  goal: 5,     value: (s) => s.referrals },
+    { id: 'earn100k', title: 'High Earner',  desc: 'Reach ₦100,000 total earnings', icon: 'trophy', reward: 10000, goal: 100000, value: (s) => s.total }
   ];
 
   const ACT_META = {
@@ -116,7 +119,7 @@
     if (taskId) state.today.done[taskId] = taskCount(taskId) + 1;
     state.activity.unshift({ type, desc, amount, ts: Date.now() });
     save();
-    toast(`+${naira(amount)} — ${desc.replace(/^You earned ₦\d+ /, '')}`);
+    toast(`+${naira(amount)} — ${desc.replace(/^You earned ₦[\d,]+ /, '')}`);
     refresh(['total', 'balance']);
   }
 
@@ -225,7 +228,7 @@
     if (player.elapsed >= LISTEN_SECONDS) {
       const song = player.song;
       state.songsPlayed += 1;
-      credit(song.reward, 'music', `You earned ₦${song.reward} for listening to "${song.title}"`);
+      credit(song.reward, 'music', `You earned ${naira(song.reward)} for listening to "${song.title}"`);
       stopSong();
       return;
     }
@@ -394,7 +397,7 @@
           const pct = Math.min(100, (v / m.goal) * 100);
           const claimed = state.claimed[m.id];
           const ready = v >= m.goal && !claimed;
-          const fmt = (n) => (m.id === 'earn15k' ? naira(n) : n.toLocaleString());
+          const fmt = (n) => (m.id === 'earn100k' ? naira(n) : n.toLocaleString());
           return `
             <article class="milestone">
               <div class="milestone-top">${icon(m.icon)}<div><b>${m.title}</b><small>${m.desc}</small></div></div>
@@ -432,7 +435,7 @@
     referral: () => {
       const link = referralLink();
       return `
-        <div class="page-title"><div><h1>Referral Program</h1><p>Earn <b class="text-gold">₦200</b> for every friend who joins and completes a task.</p></div></div>
+        <div class="page-title"><div><h1>Referral Program</h1><p>Earn <b class="text-gold">${naira(REFERRAL_BONUS)}</b> for every friend who joins and completes a task.</p></div></div>
         <div class="two-col">
           <section class="panel">
             ${panelHead('share', 'Your invite link', 'Share it on WhatsApp, Instagram or anywhere.')}
@@ -451,18 +454,18 @@
             <ol class="ref-steps">
               <li><span><b>Share your link</b><br/>Send your unique invite link to friends.</span></li>
               <li><span><b>They sign up</b><br/>Your friend creates a free MelodyPay account.</span></li>
-              <li><span><b>You both earn</b><br/>Once they finish their first task, ₦200 lands in your wallet.</span></li>
+              <li><span><b>You both earn</b><br/>Once they finish their first task, ${naira(REFERRAL_BONUS)} lands in your wallet.</span></li>
             </ol>
           </section>
         </div>
         <section class="panel">
           ${panelHead('users', 'Your referrals')}
-          <div class="activity">${state.friends.length ? '' : '<div class="empty">No referrals yet — share your link to start earning ₦200 per friend.</div>'}${state.friends.map((f) => `
+          <div class="activity">${state.friends.length ? '' : '<div class="empty">No referrals yet — share your link to start earning ' + naira(REFERRAL_BONUS) + ' per friend.</div>'}${state.friends.map((f) => `
             <div class="act">
               <span class="act-icon referral">${icon('user')}</span>
               <div><b>${esc(f.name)}</b><span>Joined and completed first task</span></div>
               <span class="time">${relTime(f.joined)}</span>
-              <span class="amt">+ ₦200</span>
+              <span class="amt">+ ${naira(REFERRAL_BONUS)}</span>
             </div>`).join('')}</div>
         </section>`;
     },
@@ -514,7 +517,7 @@
           <details><summary>How do I earn from songs? ${icon('chevron')}</summary><p>Press Play on any song and keep it playing for ${LISTEN_SECONDS} seconds. The reward is added to your wallet automatically.</p></details>
           <details><summary>What is the minimum withdrawal? ${icon('chevron')}</summary><p>You can withdraw once your available balance is at least ₦1,000. Payouts are processed within 24 hours.</p></details>
           <details><summary>Why is a task greyed out? ${icon('chevron')}</summary><p>Each task has a daily limit. Limits reset at midnight, so come back tomorrow for more.</p></details>
-          <details><summary>How do referral bonuses work? ${icon('chevron')}</summary><p>Share your link from the Referral Program page. You earn ₦200 when a friend signs up and completes their first task.</p></details>
+          <details><summary>How do referral bonuses work? ${icon('chevron')}</summary><p>Share your link from the Referral Program page. You earn ${naira(REFERRAL_BONUS)} when a friend signs up and completes their first task.</p></details>
         </div>
       </section>
       <section class="panel">
@@ -590,10 +593,10 @@
     if (!t || taskLeft(t) <= 0) return;
     if (id === 'tap') openTap(t);
     else if (id === 'video') openVideo(t);
-    else if (id === 'checkin') credit(t.reward, 'checkin', `You earned ₦${t.reward} for checking in`, { countsAsTask: true, taskId: id });
+    else if (id === 'checkin') credit(t.reward, 'checkin', `You earned ${naira(t.reward)} for checking in`, { countsAsTask: true, taskId: id });
     else if (id === 'share') {
       copyText(referralLink());
-      credit(t.reward, 'share', `You earned ₦${t.reward} for sharing MelodyPay`, { countsAsTask: true, taskId: id });
+      credit(t.reward, 'share', `You earned ${naira(t.reward)} for sharing MelodyPay`, { countsAsTask: true, taskId: id });
     }
   }
 
@@ -606,6 +609,7 @@
   function openTap(t) {
     tapTask = t;
     taps = 0;
+    $('#tapReward').textContent = naira(t.reward);
     $('#tapGoal').textContent = TAP_GOAL;
     $('#tapGoal2').textContent = TAP_GOAL;
     updateTap();
@@ -636,7 +640,7 @@
       tapTask = null;
       setTimeout(() => {
         closeModal('#tapModal');
-        credit(t.reward, 'tap', `You earned ₦${t.reward} for completing a tap task`, { countsAsTask: true, taskId: t.id });
+        credit(t.reward, 'tap', `You earned ${naira(t.reward)} for completing a tap task`, { countsAsTask: true, taskId: t.id });
       }, 500);
     }
   }
@@ -647,6 +651,7 @@
     const DURATION = 10;
     let elapsed = 0;
     $('#videoBar').style.width = '0';
+    $('#videoReward').textContent = naira(t.reward);
     $('#videoLeft').textContent = `${DURATION}s remaining`;
     openModal('#videoModal');
     clearInterval(videoTimer);
@@ -657,7 +662,7 @@
       if (elapsed >= DURATION) {
         clearInterval(videoTimer);
         closeModal('#videoModal');
-        credit(t.reward, 'video', `You earned ₦${t.reward} for watching a clip`, { countsAsTask: true, taskId: t.id });
+        credit(t.reward, 'video', `You earned ${naira(t.reward)} for watching a clip`, { countsAsTask: true, taskId: t.id });
       }
     }, 250);
   }
@@ -669,7 +674,7 @@
     const m = MILESTONES.find((x) => x.id === id);
     if (!m || state.claimed[id] || m.value(state) < m.goal) return;
     state.claimed[id] = true;
-    credit(m.reward, 'reward', `You earned ₦${m.reward} for "${m.title}"`);
+    credit(m.reward, 'reward', `You earned ${naira(m.reward)} for "${m.title}"`);
   }
 
   function referralCode() {
@@ -695,7 +700,7 @@
     $$('.field-error', form).forEach((e) => (e.textContent = ''));
     $('#wdAvail').textContent = naira(state.balance);
     if (state.bank) { form.bank.value = state.bank.bank; form.account.value = state.bank.account; }
-    const amounts = [1000, 2000, 5000, state.balance].filter((v, i, a) => v >= 1000 && v <= state.balance && a.indexOf(v) === i);
+    const amounts = [5000, 10000, 50000, state.balance].filter((v, i, a) => v >= 1000 && v <= state.balance && a.indexOf(v) === i);
     $('#quickAmounts').innerHTML = amounts.map((v) => `<button type="button" data-amt="${v}">${v === state.balance ? 'Max' : naira(v)}</button>`).join('');
     openModal('#withdrawModal');
   }
