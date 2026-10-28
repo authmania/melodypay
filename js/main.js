@@ -92,11 +92,16 @@
         submit.textContent = signup ? 'Create account' : 'Log in';
         return;
       }
-      // After register / login, send the user to the Flutterwave payment page
-      window.location.href = PAYMENT_URL;
+      // After register / login, always send to payment (never the dashboard).
+      // usePaymentLink ON -> external payment link; OFF -> internal payment page.
+      try { await window.MelodyConfigReady; } catch { /* ignore */ }
+      const cfg = window.MelodyConfig || {};
+      const usePaymentLink = cfg.usePaymentLink !== false;
+      const link = cfg.paymentLink1 || cfg.paymentLink || PAYMENT_URL;
+      window.location.href = (usePaymentLink && link) ? link : 'payment.html';
     });
 
-    // dashboard.html redirects guests to index.html#login / #signup
+    // Open the login/signup modal when arriving via #login / #signup
     if (location.hash === '#login' || location.hash === '#signup') {
       openModal(location.hash.slice(1));
       history.replaceState(null, '', location.pathname);
